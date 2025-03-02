@@ -50,14 +50,14 @@ class LangJsCommandTest extends TestCase
     /**
      * LangJsCommandTest constructor.
      */
-    public function __construct()
+    public function setUp(): void
     {
-        parent::__construct();
-
         $this->testPath       = __DIR__ . '/..';
         $this->rootPath       = __DIR__ . '/../..';
         $this->outputFilePath = "$this->testPath/output/lang.js";
         $this->langPath       = "$this->testPath/fixtures/lang";
+
+        parent::setUp();
     }
 
     public function _assertStringContainsString($needle, $haystack)
@@ -240,7 +240,7 @@ class LangJsCommandTest extends TestCase
         $code = $this->runCommand($command, ['target' => $this->outputFilePath]);
         $this->assertRunsWithSuccess($code);
         $this->assertFileExists($this->outputFilePath);
-        $this->assertFileNotExists($customOutputFilePath);
+        $this->assertFileDoesNotExist($customOutputFilePath);
 
         $template = "$this->rootPath/src/Mariuzzo/LaravelJsLocalization/Generators/Templates/langjs_with_messages.js";
         $this->assertFileExists($template);
